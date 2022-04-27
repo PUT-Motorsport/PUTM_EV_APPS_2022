@@ -30,6 +30,8 @@
 #include "Pedal_Map.h"
 #include "APPS_Meta.hpp"
 
+#include "can_interface.hpp"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
