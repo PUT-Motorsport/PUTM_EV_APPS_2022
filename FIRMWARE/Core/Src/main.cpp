@@ -154,7 +154,7 @@ int main(void)
 	HAL_GPIO_WritePin(LED_3_GPIO_Port, LED_3_Pin, GPIO_PIN_SET);
 
 	HAL_Delay(100);
-
+	uint8_t frame_couter = 0;
 	bool sensor_plausibility_last = true;
   /* USER CODE END 2 */
 
@@ -168,23 +168,23 @@ int main(void)
 
 			auto [apps_avg_1, apps_avg_2] = get_raw_avg_apps_value();
 
-			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
-				!state && !sensor_plausibility_last )
-			{
-				// turn led on
-				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
-
-				// potentially turn safety off
-				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
-
-				// TODO or send max value to cause fast stop of CT
-				send_apps_value(0);
-
-				Error_Handler();
-			}
-			else{
-				sensor_plausibility_last = state;
-			}
+//			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
+//				!state && !sensor_plausibility_last )
+//			{
+//				// turn led on
+//				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+//
+//				// potentially turn safety off
+//				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
+//
+//				// TODO or send max value to cause fast stop of CT
+//				send_apps_value(0);
+//
+//				Error_Handler();
+//			}
+//			else{
+//				sensor_plausibility_last = state;
+//			}
 
 			// range calculation
 			int apps_real_1 =  (int) std::round( ( (float)apps_avg_1 - (float)APPS_1_OFFSETTED_MIN) / scale_factor_1);
@@ -200,10 +200,28 @@ int main(void)
 			// non linear curve
 			int apps_value_to_send = apps_nonlinear_curve(apps_temp, APPS_map_profile::APPS_MAP_1_linear);
 
-			// send data
-			send_apps_value(apps_value_to_send);
 
-			// FIXME
+			// frame counter to make sure that all frames are recived
+			frame_couter++;
+			frame_couter %= 100;
+
+			// send data
+			Apps_main apps_data{};
+			apps_data.pedal_position = 123;//static_cast<uint16_t>(apps_value_to_send);
+			apps_data.counter = frame_couter;
+
+			auto tx = Can_tx_message(apps_data, can_tx_header_APPS_MAIN);
+			auto tx_status = tx.send(hcan1);
+
+			if(HAL_StatusTypeDef::HAL_OK != tx_status){
+				Error_Handler();
+			}
+
+			// rx demo
+			[[maybe_unused]] auto apps_recived_data = can_interface.get_apps_main();
+
+
+			// FIXME debug data
 			if constexpr(debug_flag){
 				debug_data[0] = apps_avg_1;
 				debug_data[1] = apps_avg_2;
@@ -364,7 +382,7 @@ static void MX_CAN1_Init(void)
   /* USER CODE END CAN1_Init 1 */
   hcan1.Instance = CAN1;
   hcan1.Init.Prescaler = 2;
-  hcan1.Init.Mode = CAN_MODE_NORMAL;
+  hcan1.Init.Mode = CAN_MODE_LOOPBACK;
   hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
   hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
   hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
@@ -558,7 +576,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, LED_1_Pin|LED_2_Pin|LED_3_Pin|LED_4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, BT_LED_Pin|SAFETY_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : LED_1_Pin LED_2_Pin LED_3_Pin LED_4_Pin */
   GPIO_InitStruct.Pin = LED_1_Pin|LED_2_Pin|LED_3_Pin|LED_4_Pin;
@@ -573,12 +591,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(SENSOR_2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BT_LED_Pin SAFETY_Pin */
-  GPIO_InitStruct.Pin = BT_LED_Pin|SAFETY_Pin;
+  /*Configure GPIO pin : SAFETY_Pin */
+  GPIO_InitStruct.Pin = SAFETY_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(SAFETY_GPIO_Port, &GPIO_InitStruct);
 
 }
 

@@ -74,8 +74,6 @@ void Error_Handler(void);
 #define CAN_RX_GPIO_Port GPIOA
 #define CAN_TX_Pin GPIO_PIN_12
 #define CAN_TX_GPIO_Port GPIOA
-#define BT_LED_Pin GPIO_PIN_4
-#define BT_LED_GPIO_Port GPIOB
 #define SAFETY_Pin GPIO_PIN_8
 #define SAFETY_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
