@@ -34,16 +34,18 @@ pedal travel and 0 N m desired motor torque, regardless of whether the brakes ar
 const float apps_dead_zone = 0.05;
 
 // const for apps sensor 1
-const int APPS_1_RAW_MIN = 1670;
-const int APPS_1_RAW_MAX = 3450;
+const int APPS_1_RAW_MIN = 301;
+const int APPS_1_RAW_MAX = 2222;
 static_assert(APPS_1_RAW_MIN < APPS_1_RAW_MAX);
+
 const int APPS_1_RAW_FULLSCALE = APPS_1_RAW_MAX - APPS_1_RAW_MIN;
 const int APPS_1_OFFSETTED_MIN = (int)std::round( APPS_1_RAW_FULLSCALE * apps_dead_zone + APPS_1_RAW_MIN );
 
 // const for apps sensor 2
-const int APPS_2_RAW_MIN = 2360;
-const int APPS_2_RAW_MAX = 3980;
+const int APPS_2_RAW_MIN = 830;
+const int APPS_2_RAW_MAX = 2666;
 static_assert(APPS_2_RAW_MIN < APPS_2_RAW_MAX);
+
 const int APPS_2_RAW_FULLSCALE = APPS_2_RAW_MAX - APPS_2_RAW_MIN;
 const int APPS_2_OFFSETTED_MIN = (int)std::round( APPS_2_RAW_FULLSCALE * apps_dead_zone + APPS_2_RAW_MIN);
 
@@ -58,7 +60,7 @@ const float	scale_factor_1 = (float) (((float) APPS_1_RAW_MAX - (float) APPS_1_O
 const float	scale_factor_2 = (float) (((float) APPS_2_RAW_MAX - (float) APPS_2_OFFSETTED_MIN) / (float) APPS_REAL_MAX);
 
 // FIXME sewnsor value to 20%
-const float sensor_implausibility_factor = 0.2;
+const float sensor_implausibility_factor = 0.1;
 
 /*
 	https://www.formulastudent.de/fileadmin/user_upload/all/2020/rules/FS-Rules_2020_V1.0.pdf

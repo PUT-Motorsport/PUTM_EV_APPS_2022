@@ -13,7 +13,7 @@
  * the "License"; You may not use this file except in compliance with the
  * License. You may obtain a copy of the License at:
  *                        opensource.org/licenses/BSD-3-Clause
- *
+ *s
  ******************************************************************************
  */
 /* USER CODE END Header */
@@ -163,28 +163,28 @@ int main(void)
 	while (1)
 	{
 		if (send_CAN_frame) {
-			send_CAN_frame = false;
+//			send_CAN_frame = false;
 			adc_cpl_flag = false;
 
 			auto [apps_avg_1, apps_avg_2] = get_raw_avg_apps_value();
 
-//			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
-//				!state && !sensor_plausibility_last )
-//			{
-//				// turn led on
-//				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
-//
-//				// potentially turn safety off
-//				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
-//
-//				// TODO or send max value to cause fast stop of CT
+			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
+				!state && !sensor_plausibility_last )
+			{
+				// turn led on
+				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+
+				// potentially turn safety off
+				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
+
+				// TODO or send max value to cause fast stop of CT
 //				send_apps_value(0);
-//
-//				Error_Handler();
-//			}
-//			else{
-//				sensor_plausibility_last = state;
-//			}
+
+				Error_Handler();
+			}
+			else{
+				sensor_plausibility_last = state;
+			}
 
 			// range calculation
 			int apps_real_1 =  (int) std::round( ( (float)apps_avg_1 - (float)APPS_1_OFFSETTED_MIN) / scale_factor_1);
@@ -382,7 +382,7 @@ static void MX_CAN1_Init(void)
   /* USER CODE END CAN1_Init 1 */
   hcan1.Instance = CAN1;
   hcan1.Init.Prescaler = 2;
-  hcan1.Init.Mode = CAN_MODE_LOOPBACK;
+  hcan1.Init.Mode = CAN_MODE_NORMAL;
   hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
   hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
   hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
