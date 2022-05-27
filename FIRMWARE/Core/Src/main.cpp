@@ -30,8 +30,7 @@
 #include "Pedal_Map.h"
 #include "APPS_Meta.hpp"
 
-#include "can_interface.hpp"
-
+#include "PUTM_EV_CAN_LIBRARY/lib/can_interface.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -206,14 +205,14 @@ int main(void)
 			frame_couter %= 100;
 
 			// send data
-			Apps_main apps_data{
+			PUTM_CAN::Apps_main apps_data{
 			    .pedal_position = static_cast<uint16_t>(apps_value_to_send),
 			    .counter = frame_couter,
 			    .position_diff = 0,
-			    .device_state = Apps_states::Normal_operation
+			    .device_state = PUTM_CAN::Apps_states::Normal_operation
 			};
 
-			auto tx = PUTM_CAN::Can_tx_message(apps_data, can_tx_header_APPS_MAIN);
+			auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
 			auto tx_status = tx.send(hcan1);
 
 			if(HAL_StatusTypeDef::HAL_OK != tx_status){
