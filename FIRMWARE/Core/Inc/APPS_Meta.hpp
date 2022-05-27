@@ -34,15 +34,15 @@ pedal travel and 0 N m desired motor torque, regardless of whether the brakes ar
 const float apps_dead_zone = 0.05;
 
 // const for apps sensor 1
-const int APPS_1_RAW_MIN = 1670;
-const int APPS_1_RAW_MAX = 3450;
+const int APPS_1_RAW_MIN = 3282;
+const int APPS_1_RAW_MAX = 3722;
 static_assert(APPS_1_RAW_MIN < APPS_1_RAW_MAX);
 const int APPS_1_RAW_FULLSCALE = APPS_1_RAW_MAX - APPS_1_RAW_MIN;
 const int APPS_1_OFFSETTED_MIN = (int)std::round( APPS_1_RAW_FULLSCALE * apps_dead_zone + APPS_1_RAW_MIN );
 
 // const for apps sensor 2
-const int APPS_2_RAW_MIN = 2360;
-const int APPS_2_RAW_MAX = 3980;
+const int APPS_2_RAW_MIN = 3823;
+const int APPS_2_RAW_MAX = 3999;
 static_assert(APPS_2_RAW_MIN < APPS_2_RAW_MAX);
 const int APPS_2_RAW_FULLSCALE = APPS_2_RAW_MAX - APPS_2_RAW_MIN;
 const int APPS_2_OFFSETTED_MIN = (int)std::round( APPS_2_RAW_FULLSCALE * apps_dead_zone + APPS_2_RAW_MIN);

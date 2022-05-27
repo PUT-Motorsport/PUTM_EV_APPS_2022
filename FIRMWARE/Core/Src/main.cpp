@@ -206,20 +206,19 @@ int main(void)
 			frame_couter %= 100;
 
 			// send data
-			Apps_main apps_data{};
-			apps_data.pedal_position = 123;//static_cast<uint16_t>(apps_value_to_send);
-			apps_data.counter = frame_couter;
+			Apps_main apps_data{
+			    .pedal_position = static_cast<uint16_t>(apps_value_to_send),
+			    .counter = frame_couter,
+			    .position_diff = 0,
+			    .device_state = Apps_states::Normal_operation
+			};
 
-			auto tx = Can_tx_message(apps_data, can_tx_header_APPS_MAIN);
+			auto tx = PUTM_CAN::Can_tx_message(apps_data, can_tx_header_APPS_MAIN);
 			auto tx_status = tx.send(hcan1);
 
 			if(HAL_StatusTypeDef::HAL_OK != tx_status){
 				Error_Handler();
 			}
-
-			// rx demo
-			[[maybe_unused]] auto apps_recived_data = can_interface.get_apps_main();
-
 
 			// FIXME debug data
 			if constexpr(debug_flag){
@@ -382,7 +381,7 @@ static void MX_CAN1_Init(void)
   /* USER CODE END CAN1_Init 1 */
   hcan1.Instance = CAN1;
   hcan1.Init.Prescaler = 2;
-  hcan1.Init.Mode = CAN_MODE_LOOPBACK;
+  hcan1.Init.Mode = CAN_MODE_NORMAL;
   hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
   hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
   hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
