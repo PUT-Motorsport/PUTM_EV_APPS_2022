@@ -31,6 +31,7 @@
 #include "APPS_Meta.hpp"
 
 #include "PUTM_EV_CAN_LIBRARY/lib/can_interface.hpp"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,6 +65,7 @@ UART_HandleTypeDef huart4;
 CAN_FilterTypeDef sFilterConfig;
 bool send_CAN_frame;
 bool adc_cpl_flag = 0;
+using namespace PUTM_CAN;
 
 const std::size_t number_of_apps_sample = 100;
 static_assert( number_of_apps_sample%2 == 0,
