@@ -27,6 +27,7 @@ fp-info-cache
 
 # scripts
 *.log
+*.prefs
 
 # Production files
 HARDWARE/Traction_Control_System/Production_Files/GERBERY/**
@@ -36,6 +37,7 @@ HARDWARE/Traction_Control_System/Production_Files/GERBERY/**
 **/Debug
 **/Drivers
 **/Release
+**/.settings
 
 # Prerequisites
 *.d
