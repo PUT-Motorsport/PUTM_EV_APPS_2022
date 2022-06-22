@@ -57,8 +57,8 @@ const int APPS_REAL_SCALE = APPS_REAL_MAX - APPS_REAL_MIN;
 const float	scale_factor_1 = (float) (((float) APPS_1_RAW_MAX - (float) APPS_1_OFFSETTED_MIN) / (float) APPS_REAL_MAX);
 const float	scale_factor_2 = (float) (((float) APPS_2_RAW_MAX - (float) APPS_2_OFFSETTED_MIN) / (float) APPS_REAL_MAX);
 
-// FIXME sewnsor value to 10%
-const float sensor_implausibility_factor = 0.1;
+// FIXME sensor value to 10%
+const float sensor_implausibility_factor = 0.15;
 
 /*
 	https://www.formulastudent.de/fileadmin/user_upload/all/2020/rules/FS-Rules_2020_V1.0.pdf

@@ -62,7 +62,6 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart4;
 
 /* USER CODE BEGIN PV */
-CAN_FilterTypeDef sFilterConfig;
 bool send_CAN_frame;
 bool adc_cpl_flag = 0;
 using namespace PUTM_CAN;
@@ -170,17 +169,13 @@ int main(void)
 			auto [apps_avg_1, apps_avg_2] = get_raw_avg_apps_value();
 
 			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
-			!state && !sensor_plausibility_last )
+			not state && not sensor_plausibility_last )
 			{
 				// turn led on
 				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
 
-				// potentially turn safety off
-				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
-
 				while(true){
 					HAL_Delay(10);
-					// TODO or send max value to cause fast stop of CT
 					PUTM_CAN::Apps_main apps_data{
 						.pedal_position = static_cast<uint16_t>(0),
 						.counter = frame_couter,
@@ -191,6 +186,7 @@ int main(void)
 					auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
 					auto tx_status = tx.send(hcan1);
 					frame_couter++;
+					frame_couter %= 100;
 				}
 
 			}
@@ -212,22 +208,22 @@ int main(void)
 			// non linear curve
 			int apps_value_to_send = apps_nonlinear_curve(apps_temp, APPS_map_profile::APPS_MAP_1_linear);
 
-
 			// frame counter to make sure that all frames are recived
 			frame_couter++;
 			frame_couter %= 100;
 
+			int8_t sensor_diff_to_send{static_cast<int8_t>(std::clamp(diff_debug_data * 100'0.0f, -120.0f, 120.0f))};
+
 			// send data
 			PUTM_CAN::Apps_main apps_data{
 				.pedal_position = static_cast<uint16_t>(apps_value_to_send),
-						.counter = frame_couter,
-						.position_diff = 0,
-						.device_state = PUTM_CAN::Apps_states::Normal_operation
+				.counter = frame_couter,
+				.position_diff = sensor_diff_to_send,
+				.device_state = PUTM_CAN::Apps_states::Normal_operation
 			};
 
 			auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
 			auto tx_status = tx.send(hcan1);
-
 			if(HAL_StatusTypeDef::HAL_OK != tx_status){
 				Error_Handler();
 			}
@@ -243,7 +239,7 @@ int main(void)
 				debug_data[4] = apps_temp_1;
 				debug_data[5] = apps_temp_2;
 
-				//debug_data[6] = apps_temp;
+				debug_data[6] = apps_temp;
 
 				debug_data[7] = apps_value_to_send;
 			}
@@ -613,16 +609,19 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void My_CAN_init(void) {
-	sFilterConfig.FilterBank = 0;
-	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterIdHigh = 0x0000;
-	sFilterConfig.FilterIdLow = 0x0000;
-	sFilterConfig.FilterMaskIdHigh = 0x0000;
-	sFilterConfig.FilterMaskIdLow = 0x0000;
-	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
-	sFilterConfig.FilterActivation = ENABLE;
-	sFilterConfig.SlaveStartFilterBank = 14;
+	constexpr static CAN_FilterTypeDef sFilterConfig{
+		.FilterIdHigh = 0x0000,
+		.FilterIdLow = 0x0000,
+		.FilterMaskIdHigh = 0x0000,
+		.FilterMaskIdLow = 0x0000,
+		.FilterFIFOAssignment = CAN_RX_FIFO0,
+		.FilterBank = 0,
+		.FilterMode = CAN_FILTERMODE_IDMASK,
+		.FilterScale = CAN_FILTERSCALE_32BIT,
+		.FilterActivation = ENABLE,
+		.SlaveStartFilterBank = 14
+	};
+
 
 	if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK) {
 		Error_Handler();
@@ -677,14 +676,6 @@ bool get_sensors_plausibility(int apps_raw_value_1, int apps_raw_value_2){
 		return true;
 	}
 
-}
-
-void send_apps_value(int value_to_send){
-	uint8_t apps_data[8] = {0};
-	apps_data[0] = (uint8_t) (value_to_send & 0x00FF);
-	apps_data[1] = (uint8_t) (value_to_send >> 8);
-	HAL_CAN_AddTxMessage(&hcan, &tx_header_apps_data, apps_data, &mail_data_apps);
-	while (HAL_CAN_IsTxMessagePending(&hcan, mail_data_apps));
 }
 
 /* USER CODE END 4 */
