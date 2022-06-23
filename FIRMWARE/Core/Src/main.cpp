@@ -145,7 +145,7 @@ int main(void)
 
 	My_CAN_init();
 
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t *) apps_val_raw, 100);
+	HAL_ADC_Start_DMA(&hadc1, reinterpret_cast<uint32_t*>(apps_val_raw), 100);
 	HAL_TIM_Base_Start(&htim3);
 	HAL_TIM_Base_Start_IT(&htim2);
 
@@ -177,9 +177,9 @@ int main(void)
 				while(true){
 					HAL_Delay(10);
 					PUTM_CAN::Apps_main apps_data{
-						.pedal_position = static_cast<uint16_t>(0),
-						.counter = frame_couter,
-						.position_diff = 0,
+						.pedal_position{0},
+						.counter{frame_couter},
+						.position_diff{0},
 						.device_state = PUTM_CAN::Apps_states::Sensor_Implausiblity
 					};
 
