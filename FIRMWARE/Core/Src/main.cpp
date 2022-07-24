@@ -184,7 +184,7 @@ int main(void)
 					};
 
 					auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
-					auto tx_status = tx.send(hcan1);
+					[[maybe_unused]] auto tx_status = tx.send(hcan1);
 					frame_couter++;
 					frame_couter %= 100;
 				}
