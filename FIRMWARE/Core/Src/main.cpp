@@ -13,7 +13,7 @@
  * the "License"; You may not use this file except in compliance with the
  * License. You may obtain a copy of the License at:
  *                        opensource.org/licenses/BSD-3-Clause
- *
+ *s
  ******************************************************************************
  */
 /* USER CODE END Header */
@@ -185,32 +185,24 @@ int main(void)
 
 
 		if (send_CAN_frame) {
-			send_CAN_frame = false;
+//			send_CAN_frame = false;
 			adc_cpl_flag = false;
 
 			auto [apps_avg_1, apps_avg_2] = get_raw_avg_apps_value();
 
 			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
-			not state && not sensor_plausibility_last )
+				!state && !sensor_plausibility_last )
 			{
 				// turn led on
 				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
 
-				while(true){
-					HAL_Delay(10);
-					PUTM_CAN::Apps_main apps_data{
-						.pedal_position{0},
-						.counter{frame_couter},
-						.position_diff{0},
-						.device_state = PUTM_CAN::Apps_states::Sensor_Implausiblity
-					};
+				// potentially turn safety off
+				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
 
-					auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
-					[[maybe_unused]] auto tx_status = tx.send(hcan1);
-					frame_couter++;
-					frame_couter %= 100;
-				}
+				// TODO or send max value to cause fast stop of CT
+//				send_apps_value(0);
 
+				Error_Handler();
 			}
 			else{
 				sensor_plausibility_last = state;
@@ -408,24 +400,24 @@ static void MX_CAN1_Init(void)
 
 	/* USER CODE BEGIN CAN1_Init 1 */
 
-	/* USER CODE END CAN1_Init 1 */
-	hcan1.Instance = CAN1;
-	hcan1.Init.Prescaler = 2;
-	hcan1.Init.Mode = CAN_MODE_NORMAL;
-	hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
-	hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
-	hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
-	hcan1.Init.TimeTriggeredMode = DISABLE;
-	hcan1.Init.AutoBusOff = DISABLE;
-	hcan1.Init.AutoWakeUp = DISABLE;
-	hcan1.Init.AutoRetransmission = DISABLE;
-	hcan1.Init.ReceiveFifoLocked = DISABLE;
-	hcan1.Init.TransmitFifoPriority = DISABLE;
-	if (HAL_CAN_Init(&hcan1) != HAL_OK)
-	{
-		Error_Handler();
-	}
-	/* USER CODE BEGIN CAN1_Init 2 */
+  /* USER CODE END CAN1_Init 1 */
+  hcan1.Instance = CAN1;
+  hcan1.Init.Prescaler = 2;
+  hcan1.Init.Mode = CAN_MODE_NORMAL;
+  hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
+  hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
+  hcan1.Init.TimeSeg2 = CAN_BS2_2TQ;
+  hcan1.Init.TimeTriggeredMode = DISABLE;
+  hcan1.Init.AutoBusOff = DISABLE;
+  hcan1.Init.AutoWakeUp = DISABLE;
+  hcan1.Init.AutoRetransmission = DISABLE;
+  hcan1.Init.ReceiveFifoLocked = DISABLE;
+  hcan1.Init.TransmitFifoPriority = DISABLE;
+  if (HAL_CAN_Init(&hcan1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN CAN1_Init 2 */
 
 	/* USER CODE END CAN1_Init 2 */
 
