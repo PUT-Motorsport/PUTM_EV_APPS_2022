@@ -156,12 +156,34 @@ int main(void)
 	HAL_Delay(100);
 	uint8_t frame_couter = 0;
 	bool sensor_plausibility_last = true;
+
+	uint32_t time_change = 0;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
+
+		auto bms_hv = PUTM_CAN::can.get_bms_hv_main();
+		bool ts_button = PUTM_CAN::can.get_aq_ts_button_new_data();
+		bool no_brake = PUTM_CAN::can.get_aq_main().brake_pressure_front < 3600;
+
+		if(ts_button and no_brake){
+			if(bms_hv.device_state == PUTM_CAN::BMS_HV_states::AIR_opened){
+				HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
+				time_change = HAL_GetTick();
+			}
+		}
+
+		bool wait_after_start = time_change + 1000 > HAL_GetTick();
+		if(bms_hv.device_state == PUTM_CAN::BMS_HV_states::AIR_opened and not wait_after_start){
+			HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_RESET);
+		}
+
+
+
+
 		if (send_CAN_frame) {
 			send_CAN_frame = false;
 			adc_cpl_flag = false;
