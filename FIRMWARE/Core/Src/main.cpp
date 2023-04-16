@@ -169,12 +169,10 @@ int main(void)
 		bool ts_button = PUTM_CAN::can.get_aq_ts_button_new_data();
 		bool no_brake = PUTM_CAN::can.get_aq_main().brake_pressure_front < 3600;
 
-		if(ts_button and no_brake){
-			if(bms_hv.device_state == PUTM_CAN::BMS_HV_states::AIR_opened){
+		if (PUTM_CAN::can.get_steering_wheel_event_new_data()) {
 				HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
 				time_change = HAL_GetTick();
 			}
-		}
 
 		bool wait_after_start = time_change + 1000 > HAL_GetTick();
 		if(bms_hv.device_state == PUTM_CAN::BMS_HV_states::AIR_opened and not wait_after_start){
@@ -239,6 +237,16 @@ int main(void)
 			auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
 			auto tx_status = tx.send(hcan1);
 			if(HAL_StatusTypeDef::HAL_OK != tx_status){
+				Error_Handler();
+			}
+
+			const auto brake_val = (apps_data.pedal_position > 20) ? 0 : 0xFFFF;
+			PUTM_CAN::AQ_main aq {
+				.brake_pressure_front = brake_val,
+						.brake_pressure_back = brake_val,
+			};
+			auto tx_aq = PUTM_CAN::Can_tx_message(aq, PUTM_CAN::can_tx_header_AQ_MAIN);
+			if (HAL_StatusTypeDef::HAL_OK not_eq tx_aq.send(hcan1)) {
 				Error_Handler();
 			}
 
