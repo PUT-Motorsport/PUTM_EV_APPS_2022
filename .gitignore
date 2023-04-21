@@ -1,6 +1,11 @@
 # For PCBs designed using KiCad: http://www.kicad-pcb.org/
 # Format documentation: http://kicad-pcb.org/help/file-formats/
 
+/HARDWARE/*-backups/
+/HARDWARE/*.kicad_prl
+/HARDWARE/fp-info-cache
+/HARDWARE/\#auto_saved_files\#
+
 # Temporary files
 *.000
 *.bak
