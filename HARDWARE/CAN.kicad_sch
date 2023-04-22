@@ -5,8 +5,13 @@
   (paper "A4")
 
   (title_block
-    (company "PUT Motorsport")
-    (comment 1 "Patryk Gawron")
+    (title "CAN Communication")
+    (date "2023-04-22")
+    (rev "2.0")
+    (company "S. Sambor")
+    (comment 1 "J. Jurczak")
+    (comment 2 "P. Gawron")
+    (comment 3 "I. Kajdan")
   )
 
   (lib_symbols
@@ -574,7 +579,7 @@
   (symbol (lib_id "power:GND") (at 147.32 73.66 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f60fb9c)
-    (property "Reference" "#PWR020" (at 147.32 80.01 0)
+    (property "Reference" "#PWR032" (at 147.32 80.01 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 147.447 78.0542 0)
@@ -590,7 +595,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "#PWR020") (unit 1)
+          (reference "#PWR032") (unit 1)
         )
       )
     )
@@ -599,7 +604,7 @@
   (symbol (lib_id "power:GND") (at 130.81 102.87 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f60fbc1)
-    (property "Reference" "#PWR022" (at 130.81 109.22 0)
+    (property "Reference" "#PWR031" (at 130.81 109.22 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 130.937 107.2642 0)
@@ -615,7 +620,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "#PWR022") (unit 1)
+          (reference "#PWR031") (unit 1)
         )
       )
     )
@@ -624,7 +629,7 @@
   (symbol (lib_id "power:+5V") (at 130.81 58.42 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f60fc9d)
-    (property "Reference" "#PWR019" (at 130.81 62.23 0)
+    (property "Reference" "#PWR030" (at 130.81 62.23 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 131.191 54.0258 0)
@@ -640,7 +645,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "#PWR019") (unit 1)
+          (reference "#PWR030") (unit 1)
         )
       )
     )
@@ -649,10 +654,10 @@
   (symbol (lib_id "Device:C") (at 147.32 67.31 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f60fdf8)
-    (property "Reference" "C18" (at 150.241 66.1416 0)
+    (property "Reference" "C21" (at 150.241 66.1416 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 150.241 68.453 0)
+    (property "Value" "100n" (at 150.241 68.453 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 148.2852 71.12 0)
@@ -666,7 +671,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "C18") (unit 1)
+          (reference "C21") (unit 1)
         )
       )
     )
@@ -675,7 +680,7 @@
   (symbol (lib_id "Device:R_Small") (at 166.37 90.17 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f6105d7)
-    (property "Reference" "R8" (at 167.8686 89.0016 0)
+    (property "Reference" "R23" (at 167.8686 89.0016 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "120R" (at 167.8686 91.313 0)
@@ -692,7 +697,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "R8") (unit 1)
+          (reference "R23") (unit 1)
         )
       )
     )
@@ -701,7 +706,7 @@
   (symbol (lib_id "D_TVS_x2_AAC:D_TVS_x2_AAC-Device") (at 158.75 85.09 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f611eb6)
-    (property "Reference" "D9" (at 156.7434 83.9216 90)
+    (property "Reference" "D7" (at 156.7434 83.9216 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "PESD2CAN.215" (at 156.7434 86.233 90)
@@ -719,7 +724,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "D9") (unit 1)
+          (reference "D7") (unit 1)
         )
       )
     )
@@ -728,7 +733,7 @@
   (symbol (lib_id "power:GND") (at 162.56 85.09 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f612dec)
-    (property "Reference" "#PWR021" (at 162.56 91.44 0)
+    (property "Reference" "#PWR033" (at 162.56 91.44 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 162.687 89.4842 0)
@@ -744,7 +749,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "#PWR021") (unit 1)
+          (reference "#PWR033") (unit 1)
         )
       )
     )
@@ -753,10 +758,10 @@
   (symbol (lib_id "Jumper_NC_Small:Jumper_NC_Small") (at 166.37 82.55 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-0000609989c6)
-    (property "Reference" "JP1" (at 168.2496 81.3816 90)
+    (property "Reference" "JP3" (at 168.2496 81.3816 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "Jumper_NC_Small" (at 168.2496 83.693 90)
+    (property "Value" "Terminator" (at 168.2496 83.693 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" (at 166.37 82.55 0)
@@ -770,7 +775,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f83f"
-          (reference "JP1") (unit 1)
+          (reference "JP3") (unit 1)
         )
       )
     )

@@ -5,8 +5,13 @@
   (paper "A4")
 
   (title_block
-    (company "PUT Motorsport")
-    (comment 1 "Patryk Gawron")
+    (title "Connectors")
+    (date "2023-04-22")
+    (rev "2.0")
+    (company "S. Sambor")
+    (comment 1 "J. Jurczak")
+    (comment 2 "P. Gawron")
+    (comment 3 "I. Kajdan")
   )
 
   (lib_symbols
@@ -1105,7 +1110,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 74ea21dc-6c6d-4009-b6b9-5d41595d6dbe)
   )
-  (text "TELEMETRIA" (at 153.035 99.695 0)
+  (text "TELEMETRY" (at 153.035 99.695 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 761aaf50-aaf1-4b16-bdeb-6e13579c9c16)
   )
@@ -1117,7 +1122,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 776cfb02-9f08-4b76-b800-dc2c52ed821c)
   )
-  (text "APPS" (at 153.035 84.455 0)
+  (text "APPS" (at 153.035 85.725 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 785be138-95ea-4dd6-a971-36341c6a2ae1)
   )
@@ -1133,7 +1138,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 85ee8ad3-5d78-4f12-b858-aa4a5e3ffc0a)
   )
-  (text "KARTA MOLIK" (at 153.035 90.805 0)
+  (text "DATA AQ CARD" (at 153.035 92.075 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 91449e1f-d071-479d-b08d-b24ca44460d7)
   )
@@ -1299,10 +1304,10 @@
   (symbol (lib_id "Device:R") (at 256.54 92.71 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 07df8f93-7b84-437f-a326-0ed04fce7f97)
-    (property "Reference" "R17" (at 255.905 95.25 90)
+    (property "Reference" "R27" (at 252.73 95.25 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "220R" (at 260.985 95.25 90)
+    (property "Value" "220R" (at 259.08 95.25 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (at 256.54 90.932 90)
@@ -1316,7 +1321,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "R17") (unit 1)
+          (reference "R27") (unit 1)
         )
       )
     )
@@ -1325,7 +1330,7 @@
   (symbol (lib_id "power:+24V") (at 266.7 83.82 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 19768f2f-1e95-477c-97b8-06e4b42f3896)
-    (property "Reference" "#PWR0111" (at 266.7 87.63 0)
+    (property "Reference" "#PWR041" (at 266.7 87.63 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+24V" (at 266.7 80.01 0)
@@ -1341,7 +1346,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0111") (unit 1)
+          (reference "#PWR041") (unit 1)
         )
       )
     )
@@ -1350,10 +1355,10 @@
   (symbol (lib_id "power:GND") (at 262.89 92.71 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 340af30e-c4d9-4f3b-b52f-0d5f09327a4e)
-    (property "Reference" "#PWR0110" (at 269.24 92.71 0)
+    (property "Reference" "#PWR040" (at 269.24 92.71 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "GND" (at 266.7 92.7099 90)
+    (property "Value" "GND" (at 266.7 93.345 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "" (at 262.89 92.71 0)
@@ -1366,19 +1371,19 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0110") (unit 1)
+          (reference "#PWR040") (unit 1)
         )
       )
     )
   )
 
   (symbol (lib_id "power:GND") (at 243.84 102.87 90) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (in_bom yes) (on_board yes) (dnp no)
     (uuid 44472129-bd20-46c2-b1dc-dee4f42bb80c)
-    (property "Reference" "#PWR0105" (at 250.19 102.87 0)
+    (property "Reference" "#PWR038" (at 250.19 102.87 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "GND" (at 247.65 102.8699 90)
+    (property "Value" "GND" (at 247.65 102.87 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "" (at 243.84 102.87 0)
@@ -1391,7 +1396,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0105") (unit 1)
+          (reference "#PWR038") (unit 1)
         )
       )
     )
@@ -1400,10 +1405,10 @@
   (symbol (lib_id "conn_02x10_odd_even:Conn_02x10_Odd_Even") (at 119.38 91.44 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 45ff8566-9c09-421d-8aac-30e60ca21b43)
-    (property "Reference" "J5" (at 120.65 75.7682 0)
+    (property "Reference" "J2" (at 120.65 75.7682 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "Diagnostyka" (at 120.65 78.0796 0)
+    (property "Value" "Diagnostics" (at 120.65 78.0796 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x10_P2.54mm_Vertical" (at 119.38 91.44 0)
@@ -1435,7 +1440,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "J5") (unit 1)
+          (reference "J2") (unit 1)
         )
       )
     )
@@ -1444,7 +1449,7 @@
   (symbol (lib_id "power:GND") (at 218.44 102.87 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 4651a842-105b-4541-b727-653c290b6ef1)
-    (property "Reference" "#PWR0107" (at 212.09 102.87 0)
+    (property "Reference" "#PWR036" (at 212.09 102.87 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 214.63 102.8699 90)
@@ -1460,19 +1465,19 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0107") (unit 1)
+          (reference "#PWR036") (unit 1)
         )
       )
     )
   )
 
   (symbol (lib_id "power:GND") (at 243.84 87.63 90) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (in_bom yes) (on_board yes) (dnp no)
     (uuid 6e512428-aaad-4874-bd87-49e55327ff49)
-    (property "Reference" "#PWR0108" (at 250.19 87.63 0)
+    (property "Reference" "#PWR037" (at 250.19 87.63 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "GND" (at 247.65 87.6299 90)
+    (property "Value" "GND" (at 247.65 87.63 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "" (at 243.84 87.63 0)
@@ -1485,7 +1490,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0108") (unit 1)
+          (reference "#PWR037") (unit 1)
         )
       )
     )
@@ -1513,7 +1518,7 @@
           (reference "#PWR019") (unit 1)
         )
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR029") (unit 1)
+          (reference "#PWR034") (unit 1)
         )
       )
     )
@@ -1522,10 +1527,10 @@
   (symbol (lib_id "power:GND") (at 262.89 90.17 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 793b116d-0e9e-460a-81d7-2e2808364663)
-    (property "Reference" "#PWR0109" (at 269.24 90.17 0)
+    (property "Reference" "#PWR039" (at 269.24 90.17 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "GND" (at 266.7 90.1699 90)
+    (property "Value" "GND" (at 266.7 90.805 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "" (at 262.89 90.17 0)
@@ -1538,7 +1543,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0109") (unit 1)
+          (reference "#PWR039") (unit 1)
         )
       )
     )
@@ -1547,10 +1552,10 @@
   (symbol (lib_id "conn_02x10_odd_even:Conn_02x10_Odd_Even") (at 229.87 90.17 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 933ef75a-b6de-4316-b450-578051e6354e)
-    (property "Reference" "J8" (at 231.14 74.4982 0)
+    (property "Reference" "J3" (at 231.14 74.4982 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "Zasilanie+CAN" (at 231.14 76.8096 0)
+    (property "Value" "Power & CAN" (at 231.14 76.8096 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x10_P2.54mm_Vertical" (at 229.87 90.17 0)
@@ -1582,7 +1587,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "J8") (unit 1)
+          (reference "J3") (unit 1)
         )
       )
     )
@@ -1591,7 +1596,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 218.44 78.74 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 9a0c1691-c26e-4382-a60b-2a6e5afb8794)
-    (property "Reference" "#FLG01" (at 218.44 76.835 0)
+    (property "Reference" "#FLG02" (at 218.44 76.835 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 218.44 74.93 0)
@@ -1607,7 +1612,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#FLG01") (unit 1)
+          (reference "#FLG02") (unit 1)
         )
       )
     )
@@ -1616,7 +1621,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 256.54 83.82 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c49b0bff-35a7-4cd9-838c-e41423e6e83d)
-    (property "Reference" "#FLG02" (at 256.54 81.915 0)
+    (property "Reference" "#FLG04" (at 256.54 81.915 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 256.54 80.01 0)
@@ -1632,7 +1637,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#FLG02") (unit 1)
+          (reference "#FLG04") (unit 1)
         )
       )
     )
@@ -1641,10 +1646,10 @@
   (symbol (lib_id "conn_02x20_odd_even:Conn_02x20_Odd_Even") (at 72.39 91.44 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid cb3b899e-96ed-4674-8c40-d6c647d9db25)
-    (property "Reference" "J4" (at 73.66 63.0682 0)
+    (property "Reference" "J1" (at 73.66 63.0682 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "Sygnały" (at 73.66 65.3796 0)
+    (property "Value" "Signals" (at 73.66 65.3796 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_2x20_P2.54mm_Vertical" (at 72.39 91.44 0)
@@ -1696,7 +1701,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "J4") (unit 1)
+          (reference "J1") (unit 1)
         )
       )
     )
@@ -1705,7 +1710,7 @@
   (symbol (lib_id "power:GND") (at 218.44 82.55 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ccb3114b-ae8d-4377-a31c-a4e504bfb159)
-    (property "Reference" "#PWR0106" (at 212.09 82.55 0)
+    (property "Reference" "#PWR035" (at 212.09 82.55 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 214.63 82.5499 90)
@@ -1721,7 +1726,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#PWR0106") (unit 1)
+          (reference "#PWR035") (unit 1)
         )
       )
     )
@@ -1730,10 +1735,10 @@
   (symbol (lib_id "Device:R") (at 195.58 90.17 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid ce8385db-ca62-4bf6-93c6-ac67711339c8)
-    (property "Reference" "R11" (at 196.85 88.265 90)
+    (property "Reference" "R24" (at 193.04 87.63 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "220R" (at 195.58 86.36 90)
+    (property "Value" "220R" (at 199.39 87.63 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (at 195.58 91.948 90)
@@ -1747,7 +1752,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "R11") (unit 1)
+          (reference "R24") (unit 1)
         )
       )
     )
@@ -1756,10 +1761,10 @@
   (symbol (lib_id "Device:R") (at 256.54 90.17 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid d2333881-e471-403f-813b-3e8fa945ec03)
-    (property "Reference" "R15" (at 255.905 87.63 90)
+    (property "Reference" "R26" (at 255.27 87.63 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "0R" (at 259.715 87.63 90)
+    (property "Value" "0R" (at 260.35 87.63 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (at 256.54 88.392 90)
@@ -1773,7 +1778,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "R15") (unit 1)
+          (reference "R26") (unit 1)
         )
       )
     )
@@ -1782,10 +1787,10 @@
   (symbol (lib_id "Device:R") (at 195.58 92.71 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid ec62a549-ea11-4f6d-b4c1-112c7a1678a2)
-    (property "Reference" "R13" (at 196.85 95.25 90)
+    (property "Reference" "R25" (at 193.04 95.25 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "0R" (at 195.58 97.155 90)
+    (property "Value" "0R" (at 200.66 95.25 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (at 195.58 94.488 90)
@@ -1799,7 +1804,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "R13") (unit 1)
+          (reference "R25") (unit 1)
         )
       )
     )
@@ -1808,7 +1813,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 220.98 102.87 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ff140ad4-2afd-4794-b1d9-50300c911930)
-    (property "Reference" "#FLG0101" (at 220.98 104.775 0)
+    (property "Reference" "#FLG03" (at 220.98 104.775 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 220.98 107.95 0)
@@ -1824,7 +1829,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006077b773"
-          (reference "#FLG0101") (unit 1)
+          (reference "#FLG03") (unit 1)
         )
       )
     )

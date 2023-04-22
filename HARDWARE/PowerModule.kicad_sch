@@ -5,8 +5,13 @@
   (paper "A4")
 
   (title_block
-    (company "PUT Motorsport")
-    (comment 1 "Patryk Gawron")
+    (title "Power for Potentiometers")
+    (date "2023-04-22")
+    (rev "2.0")
+    (company "S. Sambor")
+    (comment 1 "J. Jurczak")
+    (comment 2 "P. Gawron")
+    (comment 3 "I. Kajdan")
   )
 
   (lib_symbols
@@ -497,7 +502,7 @@
   (symbol (lib_id "power:GND") (at 74.93 110.49 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f61606c)
-    (property "Reference" "#PWR014" (at 74.93 116.84 0)
+    (property "Reference" "#PWR043" (at 74.93 116.84 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 75.057 114.8842 0)
@@ -513,7 +518,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#PWR014") (unit 1)
+          (reference "#PWR043") (unit 1)
         )
       )
     )
@@ -522,7 +527,7 @@
   (symbol (lib_id "power:+5V") (at 63.5 97.79 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f6160c4)
-    (property "Reference" "#PWR013" (at 63.5 101.6 0)
+    (property "Reference" "#PWR042" (at 63.5 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 63.881 93.3958 0)
@@ -538,7 +543,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#PWR013") (unit 1)
+          (reference "#PWR042") (unit 1)
         )
       )
     )
@@ -547,7 +552,7 @@
   (symbol (lib_id "Regulator_Linear:LM1117-3.3") (at 74.93 99.06 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f616160)
-    (property "Reference" "U3" (at 74.93 92.9132 0)
+    (property "Reference" "U7" (at 74.93 92.9132 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "LM1117-3.3" (at 74.93 95.2246 0)
@@ -565,7 +570,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "U3") (unit 1)
+          (reference "U7") (unit 1)
         )
       )
     )
@@ -574,10 +579,10 @@
   (symbol (lib_id "Device:C") (at 86.36 104.14 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f6162c0)
-    (property "Reference" "C13" (at 89.281 102.9716 0)
+    (property "Reference" "C23" (at 89.281 102.9716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 89.281 105.283 0)
+    (property "Value" "100n" (at 89.281 105.283 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 87.3252 107.95 0)
@@ -591,7 +596,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "C13") (unit 1)
+          (reference "C23") (unit 1)
         )
       )
     )
@@ -600,10 +605,10 @@
   (symbol (lib_id "Device:C") (at 63.5 104.14 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f616331)
-    (property "Reference" "C12" (at 60.579 102.9716 0)
+    (property "Reference" "C22" (at 60.579 102.9716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 60.579 105.283 0)
+    (property "Value" "100n" (at 60.579 105.283 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 62.5348 107.95 0)
@@ -617,7 +622,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "C12") (unit 1)
+          (reference "C22") (unit 1)
         )
       )
     )
@@ -626,7 +631,7 @@
   (symbol (lib_id "power:GND") (at 132.08 110.49 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f8ffe5c)
-    (property "Reference" "#PWR016" (at 132.08 116.84 0)
+    (property "Reference" "#PWR045" (at 132.08 116.84 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 132.207 114.8842 0)
@@ -642,7 +647,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#PWR016") (unit 1)
+          (reference "#PWR045") (unit 1)
         )
       )
     )
@@ -651,7 +656,7 @@
   (symbol (lib_id "power:+5V") (at 120.65 97.79 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f8ffe68)
-    (property "Reference" "#PWR015" (at 120.65 101.6 0)
+    (property "Reference" "#PWR044" (at 120.65 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 121.031 93.3958 0)
@@ -667,7 +672,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#PWR015") (unit 1)
+          (reference "#PWR044") (unit 1)
         )
       )
     )
@@ -676,7 +681,7 @@
   (symbol (lib_id "Regulator_Linear:LM1117-3.3") (at 132.08 99.06 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f8ffe6e)
-    (property "Reference" "U4" (at 132.08 92.9132 0)
+    (property "Reference" "U8" (at 132.08 92.9132 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "LM1117-3.3" (at 132.08 95.2246 0)
@@ -694,7 +699,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "U4") (unit 1)
+          (reference "U8") (unit 1)
         )
       )
     )
@@ -703,10 +708,10 @@
   (symbol (lib_id "Device:C") (at 143.51 104.14 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f8ffe74)
-    (property "Reference" "C15" (at 146.431 102.9716 0)
+    (property "Reference" "C25" (at 146.431 102.9716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 146.431 105.283 0)
+    (property "Value" "100n" (at 146.431 105.283 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 144.4752 107.95 0)
@@ -720,7 +725,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "C15") (unit 1)
+          (reference "C25") (unit 1)
         )
       )
     )
@@ -729,10 +734,10 @@
   (symbol (lib_id "Device:C") (at 120.65 104.14 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f8ffe7a)
-    (property "Reference" "C14" (at 117.729 102.9716 0)
+    (property "Reference" "C24" (at 117.729 102.9716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 117.729 105.283 0)
+    (property "Value" "100n" (at 117.729 105.283 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 119.6848 107.95 0)
@@ -746,7 +751,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "C14") (unit 1)
+          (reference "C24") (unit 1)
         )
       )
     )
@@ -755,7 +760,7 @@
   (symbol (lib_id "power:GND") (at 205.74 109.22 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f99ac03)
-    (property "Reference" "#PWR018" (at 205.74 115.57 0)
+    (property "Reference" "#PWR047" (at 205.74 115.57 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 205.867 113.6142 0)
@@ -771,7 +776,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#PWR018") (unit 1)
+          (reference "#PWR047") (unit 1)
         )
       )
     )
@@ -780,7 +785,7 @@
   (symbol (lib_id "power:+5V") (at 194.31 97.79 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f99ac09)
-    (property "Reference" "#PWR017" (at 194.31 101.6 0)
+    (property "Reference" "#PWR046" (at 194.31 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 194.691 93.3958 0)
@@ -796,7 +801,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#PWR017") (unit 1)
+          (reference "#PWR046") (unit 1)
         )
       )
     )
@@ -805,7 +810,7 @@
   (symbol (lib_id "Regulator_Linear:LM1117-3.3") (at 205.74 99.06 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f99ac0f)
-    (property "Reference" "U5" (at 205.74 92.9132 0)
+    (property "Reference" "U9" (at 205.74 92.9132 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "LM1117-3.3" (at 205.74 95.2246 0)
@@ -823,7 +828,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "U5") (unit 1)
+          (reference "U9") (unit 1)
         )
       )
     )
@@ -832,10 +837,10 @@
   (symbol (lib_id "Device:C") (at 217.17 104.14 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f99ac15)
-    (property "Reference" "C17" (at 220.091 102.9716 0)
+    (property "Reference" "C27" (at 220.091 102.9716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 220.091 105.283 0)
+    (property "Value" "100n" (at 220.091 105.283 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 218.1352 107.95 0)
@@ -849,7 +854,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "C17") (unit 1)
+          (reference "C27") (unit 1)
         )
       )
     )
@@ -858,10 +863,10 @@
   (symbol (lib_id "Device:C") (at 194.31 104.14 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f99ac1b)
-    (property "Reference" "C16" (at 191.389 102.9716 0)
+    (property "Reference" "C26" (at 191.389 102.9716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100nF" (at 191.389 105.283 0)
+    (property "Value" "100n" (at 191.389 105.283 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" (at 193.3448 107.95 0)
@@ -875,7 +880,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "C16") (unit 1)
+          (reference "C26") (unit 1)
         )
       )
     )
@@ -884,7 +889,7 @@
   (symbol (lib_id "Device:Fuse") (at 153.67 99.06 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-0000607538f0)
-    (property "Reference" "F2" (at 153.67 94.0562 90)
+    (property "Reference" "F1" (at 153.67 94.0562 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Fuse" (at 153.67 96.3676 90)
@@ -901,7 +906,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "F2") (unit 1)
+          (reference "F1") (unit 1)
         )
       )
     )
@@ -910,7 +915,7 @@
   (symbol (lib_id "Device:Fuse") (at 227.33 99.06 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-0000607546eb)
-    (property "Reference" "F3" (at 227.33 94.0562 90)
+    (property "Reference" "F2" (at 227.33 94.0562 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Fuse" (at 227.33 96.3676 90)
@@ -927,7 +932,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "F3") (unit 1)
+          (reference "F2") (unit 1)
         )
       )
     )
@@ -936,7 +941,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 236.22 99.06 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 603fc279-7c47-451b-8291-4696c442992c)
-    (property "Reference" "#FLG0107" (at 236.22 97.155 0)
+    (property "Reference" "#FLG06" (at 236.22 97.155 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 236.22 93.98 0)
@@ -952,7 +957,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#FLG0107") (unit 1)
+          (reference "#FLG06") (unit 1)
         )
       )
     )
@@ -961,7 +966,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 162.56 99.06 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 991095fd-5a2a-4bca-9938-ce3768ef39e4)
-    (property "Reference" "#FLG0106" (at 162.56 97.155 0)
+    (property "Reference" "#FLG05" (at 162.56 97.155 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 162.56 93.98 0)
@@ -977,7 +982,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f60f829"
-          (reference "#FLG0106") (unit 1)
+          (reference "#FLG05") (unit 1)
         )
       )
     )

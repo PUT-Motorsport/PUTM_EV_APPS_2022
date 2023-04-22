@@ -5,8 +5,13 @@
   (paper "A4")
 
   (title_block
-    (company "PUT Motorsport")
-    (comment 1 "Patryk Gawron")
+    (title "Safety Relay")
+    (date "2023-04-22")
+    (rev "2.0")
+    (company "S. Sambor")
+    (comment 1 "J. Jurczak")
+    (comment 2 "P. Gawron")
+    (comment 3 "I. Kajdan")
   )
 
   (lib_symbols
@@ -766,7 +771,7 @@
   (symbol (lib_id "Device:D_Small") (at 133.35 91.44 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f9a0049)
-    (property "Reference" "D10" (at 130.0988 90.0684 90)
+    (property "Reference" "D8" (at 130.0988 90.0684 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "DIODE" (at 131.3688 92.837 90)
@@ -789,7 +794,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
-          (reference "D10") (unit 1)
+          (reference "D8") (unit 1)
         )
       )
     )
@@ -825,7 +830,7 @@
   (symbol (lib_id "Device:R_Small") (at 129.54 113.03 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f9a317a)
-    (property "Reference" "R9" (at 129.54 108.0516 90)
+    (property "Reference" "R28" (at 129.54 108.0516 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "100R" (at 129.54 110.363 90)
@@ -842,7 +847,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
-          (reference "R9") (unit 1)
+          (reference "R28") (unit 1)
         )
       )
     )
@@ -851,7 +856,7 @@
   (symbol (lib_id "Device:R_Small") (at 133.35 116.84 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f9a34b7)
-    (property "Reference" "R10" (at 134.8486 115.6716 0)
+    (property "Reference" "R29" (at 134.8486 115.6716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10k" (at 134.8486 117.983 0)
@@ -868,7 +873,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
-          (reference "R10") (unit 1)
+          (reference "R29") (unit 1)
         )
       )
     )
@@ -877,7 +882,7 @@
   (symbol (lib_id "power:+5V") (at 143.51 80.01 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f9a828c)
-    (property "Reference" "#PWR023" (at 143.51 83.82 0)
+    (property "Reference" "#PWR048" (at 143.51 83.82 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 143.891 75.6158 0)
@@ -893,7 +898,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
-          (reference "#PWR023") (unit 1)
+          (reference "#PWR048") (unit 1)
         )
       )
     )
@@ -902,7 +907,7 @@
   (symbol (lib_id "power:GND") (at 143.51 121.92 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 00000000-0000-0000-0000-00005f9a917e)
-    (property "Reference" "#PWR024" (at 143.51 128.27 0)
+    (property "Reference" "#PWR049" (at 143.51 128.27 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 143.637 126.3142 0)
@@ -918,7 +923,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
-          (reference "#PWR024") (unit 1)
+          (reference "#PWR049") (unit 1)
         )
       )
     )
