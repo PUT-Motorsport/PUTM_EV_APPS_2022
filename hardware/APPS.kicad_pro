@@ -46,7 +46,7 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 0.32
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [
@@ -66,7 +66,7 @@
         "clearance": "error",
         "connection_width": "warning",
         "copper_edge_clearance": "error",
-        "copper_sliver": "warning",
+        "copper_sliver": "ignore",
         "courtyards_overlap": "error",
         "diff_pair_gap_out_of_range": "error",
         "diff_pair_uncoupled_length_too_long": "error",
@@ -419,7 +419,7 @@
       "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
-      "simulation_model_issue": "error",
+      "simulation_model_issue": "ignore",
       "unannotated": "error",
       "unit_value_mismatch": "error",
       "unresolved_variable": "error",
@@ -523,11 +523,15 @@
     ],
     [
       "00000000-0000-0000-0000-00006068dc5c",
-      "Analog Inputs"
+      "Potentiometers' Amplifiers"
+    ],
+    [
+      "347af574-7f04-42ac-a8b1-78f5ed89add6",
+      "Brake Pressure Left"
     ],
     [
       "00000000-0000-0000-0000-00005f60f83f",
-      "CAN"
+      "CAN Transceiver"
     ],
     [
       "00000000-0000-0000-0000-00006077b773",
@@ -535,11 +539,15 @@
     ],
     [
       "00000000-0000-0000-0000-00005f60f829",
-      "Power Module"
+      "Power"
     ],
     [
       "00000000-0000-0000-0000-00005f99e99e",
-      "Safety"
+      "Safety Relay"
+    ],
+    [
+      "11236715-9d3d-46a6-8693-03c5fb52ffb8",
+      "Brake Pressure Right"
     ]
   ],
   "text_variables": {}

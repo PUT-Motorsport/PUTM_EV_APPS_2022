@@ -1395,7 +1395,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 181.61 59.69 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 06ef8c93-6274-4c72-9b73-76d6c533e084)
-    (property "Reference" "TP3" (at 180.34 53.34 0)
+    (property "Reference" "TP5" (at 180.34 53.34 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "O1" (at 184.15 58.293 0)
@@ -1411,7 +1411,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006068dc5c"
-          (reference "TP3") (unit 1)
+          (reference "TP5") (unit 1)
         )
       )
     )
@@ -1962,7 +1962,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 240.03 62.23 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 49788603-7c96-495a-a020-f55e7ec90691)
-    (property "Reference" "TP4" (at 238.76 55.88 0)
+    (property "Reference" "TP7" (at 238.76 55.88 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "F1" (at 242.57 60.833 0)
@@ -1978,7 +1978,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006068dc5c"
-          (reference "TP4") (unit 1)
+          (reference "TP7") (unit 1)
         )
       )
     )
@@ -2013,7 +2013,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 181.61 129.54 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 4b13e80f-8288-4d29-b3ae-0b06e3c01e1a)
-    (property "Reference" "TP7" (at 180.34 123.19 0)
+    (property "Reference" "TP6" (at 180.34 123.19 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "O2" (at 184.15 128.143 0)
@@ -2029,7 +2029,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006068dc5c"
-          (reference "TP7") (unit 1)
+          (reference "TP6") (unit 1)
         )
       )
     )
@@ -2699,7 +2699,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 148.59 132.08 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid a7730504-e69c-4f45-918a-a13eee72b52a)
-    (property "Reference" "TP6" (at 147.32 138.43 0)
+    (property "Reference" "TP4" (at 147.32 138.43 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "N2" (at 151.13 137.287 0)
@@ -2715,7 +2715,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006068dc5c"
-          (reference "TP6") (unit 1)
+          (reference "TP4") (unit 1)
         )
       )
     )
@@ -2750,7 +2750,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 148.59 127 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid b480bf81-40a2-406c-9ca9-a5dcbd46ecd0)
-    (property "Reference" "TP5" (at 147.32 120.65 0)
+    (property "Reference" "TP3" (at 147.32 120.65 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "P2" (at 151.13 125.603 0)
@@ -2766,7 +2766,7 @@
     (instances
       (project "APPS"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00006068dc5c"
-          (reference "TP5") (unit 1)
+          (reference "TP3") (unit 1)
         )
       )
     )
