@@ -4,6 +4,14 @@
 
   (paper "A4")
 
+  (title_block
+    (rev "2.0")
+    (company "S. Sambor")
+    (comment 1 "J. Jurczak")
+    (comment 2 "P. Gawron")
+    (comment 3 "I. Kajdan")
+  )
+
   (lib_symbols
     (symbol "Amplifier_Operational:MCP6002-xMC" (pin_names (offset 0.127)) (in_bom yes) (on_board yes)
       (property "Reference" "U" (at 0 5.08 0)
