@@ -727,11 +727,11 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 511842f3-b804-4abf-aa2c-b7e28c7d50b0)
   )
-  (hierarchical_label "SAFETY2" (shape input) (at 153.67 100.33 270) (fields_autoplaced)
+  (hierarchical_label "IN" (shape input) (at 153.67 100.33 270) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 932b1a92-f5d2-47d1-b1f0-1f4180d05597)
   )
-  (hierarchical_label "SAFETY1" (shape output) (at 156.21 82.55 90) (fields_autoplaced)
+  (hierarchical_label "OUT" (shape output) (at 156.21 82.55 90) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid d1b89d3a-6833-4e5c-9ab9-733014f3d8d5)
   )
@@ -760,7 +760,7 @@
     (pin "A1" (uuid b0e767f2-d50e-45fa-a043-03ee3562e223))
     (pin "A2" (uuid 426559ac-df1a-47bd-8757-fd461a7fb2ff))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "K1") (unit 1)
         )
@@ -792,7 +792,7 @@
     (pin "1" (uuid f5bc825d-4ea2-4768-b5a7-e8185d7c45b9))
     (pin "2" (uuid 7c51826c-6106-43dd-be37-da151dc38567))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "D8") (unit 1)
         )
@@ -819,7 +819,7 @@
     (pin "2" (uuid dd2a6ad9-6d5a-4c99-b738-b8e199acc666))
     (pin "3" (uuid 32380d33-c4bc-4b21-9910-83df35501e89))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "Q1") (unit 1)
         )
@@ -845,7 +845,7 @@
     (pin "1" (uuid 391784ed-dedb-4f40-8dff-d62851f9a6ed))
     (pin "2" (uuid 6a001712-f87e-49bb-9b43-61b43d69e0e0))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "R34") (unit 1)
         )
@@ -871,7 +871,7 @@
     (pin "1" (uuid e4a6f726-36a7-46f4-ba44-217d92ab0296))
     (pin "2" (uuid 2227dcb9-1b8b-4d34-b8c4-c7df523b7c54))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "R35") (unit 1)
         )
@@ -896,7 +896,7 @@
     )
     (pin "1" (uuid 4bee5892-6b3a-433a-b771-068c80bdc6e8))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "#PWR055") (unit 1)
         )
@@ -921,7 +921,7 @@
     )
     (pin "1" (uuid 1a70bf2a-d0ef-4a56-9963-df26f9d6e146))
     (instances
-      (project "APPS"
+      (project "apps"
         (path "/fc4ad874-c922-4070-89f9-7262080469d8/00000000-0000-0000-0000-00005f99e99e"
           (reference "#PWR056") (unit 1)
         )

@@ -431,7 +431,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "APPS.kicad_pro",
+    "filename": "apps.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -506,7 +506,7 @@
       "workbook_filename": ""
     },
     "page_layout_descr_file": "putm_frame.kicad_wks",
-    "plot_directory": "A:/pliki/APPS_Mechatronika/jj update/APPS/",
+    "plot_directory": "",
     "spice_adjust_passive_values": false,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
@@ -523,7 +523,7 @@
     ],
     [
       "00000000-0000-0000-0000-00006068dc5c",
-      "Potentiometers' Amplifiers"
+      "APPS"
     ],
     [
       "347af574-7f04-42ac-a8b1-78f5ed89add6",
