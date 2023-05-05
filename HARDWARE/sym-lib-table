@@ -1,4 +1,0 @@
-(sym_lib_table
-  (lib (name "APPS-rescue")(type "Legacy")(uri "${KIPRJMOD}/APPS-rescue.lib")(options "")(descr ""))
-  (lib (name "2021-05-10_08-39-16")(type "Legacy")(uri "${KIPRJMOD}/Libs/ul_STM32L4P5RET6/KiCAD/2021-05-10_08-39-16/2021-05-10_08-39-16.lib")(options "")(descr ""))
-)

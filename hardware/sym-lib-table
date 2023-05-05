@@ -1,0 +1,7 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "MCP6N11")(type "KiCad")(uri "${KIPRJMOD}/symbols/MCP6N11.kicad_sym")(options "")(descr ""))
+  (lib (name "STM32L4P5RET6")(type "KiCad")(uri "${KIPRJMOD}/symbols/STM32L4P5RET6.kicad_sym")(options "")(descr ""))
+  (lib (name "D_TVS_x2_AAC")(type "KiCad")(uri "${KIPRJMOD}/symbols/D_TVS_x2_AAC.kicad_sym")(options "")(descr ""))
+  (lib (name "Jumper_NC_Small")(type "KiCad")(uri "${KIPRJMOD}/symbols/Jumper_NC_Small.kicad_sym")(options "")(descr ""))
+)

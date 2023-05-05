@@ -1,5 +1,0 @@
-(fp_lib_table
-  (lib (name HC05)(type KiCad)(uri ${KIPRJMOD}/HC05.pretty)(options "")(descr ""))
-  (lib (name footprints)(type KiCad)(uri ${KIPRJMOD}/Libs/ul_STM32L4P5RET6/KiCAD/2021-05-10_08-39-16/footprints.pretty)(options "")(descr ""))
-  (lib (name Logos)(type KiCad)(uri ${KIPRJMOD}/Logos.pretty)(options "")(descr ""))
-)

@@ -20,4 +20,4 @@ Software for APPS signal handling is developed using C++ for STM32 microcontroll
 
 ## Program schematic
 
-![APPS diagram](/DOCUMENTATION/APPS_diagram.png)
+![APPS diagram](/documentation/APPS_diagram.png)
