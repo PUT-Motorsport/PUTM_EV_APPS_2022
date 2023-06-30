@@ -58,24 +58,33 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_1_Pin GPIO_PIN_4
-#define LED_1_GPIO_Port GPIOA
-#define LED_2_Pin GPIO_PIN_5
-#define LED_2_GPIO_Port GPIOA
-#define LED_3_Pin GPIO_PIN_6
-#define LED_3_GPIO_Port GPIOA
-#define LED_4_Pin GPIO_PIN_7
-#define LED_4_GPIO_Port GPIOA
+#define BRK_PRESS1_Pin GPIO_PIN_0
+#define BRK_PRESS1_GPIO_Port GPIOC
+#define BRK_PRESS2_Pin GPIO_PIN_1
+#define BRK_PRESS2_GPIO_Port GPIOC
+#define DAC_REF1_Pin GPIO_PIN_4
+#define DAC_REF1_GPIO_Port GPIOA
+#define DAC_REF2_Pin GPIO_PIN_5
+#define DAC_REF2_GPIO_Port GPIOA
 #define SENSOR_1_Pin GPIO_PIN_4
 #define SENSOR_1_GPIO_Port GPIOC
 #define SENSOR_2_Pin GPIO_PIN_5
 #define SENSOR_2_GPIO_Port GPIOC
+#define LED_4_Pin GPIO_PIN_0
+#define LED_4_GPIO_Port GPIOB
+#define LED_3_Pin GPIO_PIN_1
+#define LED_3_GPIO_Port GPIOB
+#define LED_2_Pin GPIO_PIN_2
+#define LED_2_GPIO_Port GPIOB
+#define LED_1_Pin GPIO_PIN_10
+#define LED_1_GPIO_Port GPIOB
 #define CAN_RX_Pin GPIO_PIN_11
 #define CAN_RX_GPIO_Port GPIOA
 #define CAN_TX_Pin GPIO_PIN_12
 #define CAN_TX_GPIO_Port GPIOA
 #define SAFETY_Pin GPIO_PIN_8
 #define SAFETY_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
