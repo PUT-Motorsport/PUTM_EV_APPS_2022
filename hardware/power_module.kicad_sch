@@ -6,7 +6,7 @@
 
   (title_block
     (title "Power for Potentiometers")
-    (date "2023-04-22")
+    (date "2023-06-30")
     (rev "2.0")
     (company "S. Sambor")
     (comment 1 "J. Jurczak")
@@ -953,7 +953,7 @@
     (property "Reference" "F1" (at 151.13 94.0562 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "Fuse" (at 151.13 96.3676 90)
+    (property "Value" "500mA" (at 151.13 96.3676 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Fuse:Fuse_2010_5025Metric" (at 151.13 97.282 90)
@@ -979,7 +979,7 @@
     (property "Reference" "F2" (at 224.79 94.0562 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "Fuse" (at 224.79 96.3676 90)
+    (property "Value" "500mA" (at 224.79 96.3676 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Fuse:Fuse_2010_5025Metric" (at 224.79 97.282 90)
