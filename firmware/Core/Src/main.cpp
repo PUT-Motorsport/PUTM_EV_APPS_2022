@@ -262,11 +262,15 @@ int main(void)
 //				Error_Handler();
 			}
 
-//			const auto brake_val = (apps_data.pedal_position > 20) ? 0 : 0xFFFF;
+			// Input: 0-3000 Psi (200 Bar)
+			// Output: 0.5-4.5 V
+			// Formula: pressure (Bars) = 50 * voltage (V) - 25
 			auto [press_avg_1, press_avg_2] = get_raw_avg_press_value();
+			float pressure_voltage = 3.3 * press_avg_1 / 4096;
+            float pressure_voltage2 = 3.3 * press_avg_2 / 4096;
 			PUTM_CAN::AQ_main aq {
-				.brake_pressure_front = press_avg_1 < 1200 ? 0 : 0xFFFF,
-                .brake_pressure_back = 0,
+			    .brake_pressure_front =  static_cast<uint16_t>((50 * pressure_voltage - 25) * 10),
+                .brake_pressure_back = static_cast<uint16_t>((50 * pressure_voltage2 - 25) * 10),
 			};
 			auto tx_aq = PUTM_CAN::Can_tx_message(aq, PUTM_CAN::can_tx_header_AQ_MAIN);
 			if (HAL_StatusTypeDef::HAL_OK not_eq tx_aq.send(hcan1)) {
