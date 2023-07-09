@@ -52,12 +52,17 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
+DMA_HandleTypeDef hdma_adc2;
 
 CAN_HandleTypeDef hcan1;
 
+DAC_HandleTypeDef hdac1;
+
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
 
 UART_HandleTypeDef huart4;
 
@@ -71,6 +76,7 @@ static_assert( number_of_apps_sample%2 == 0,
 		"array size must be even because of two sensors" );
 
 uint16_t apps_val_raw[number_of_apps_sample];
+uint16_t press_val_raw[number_of_apps_sample];
 
 // FIXME variable to debug
 const bool debug_flag = true;
@@ -80,6 +86,7 @@ float diff_debug_data;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void PeriphCommonClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
@@ -87,10 +94,14 @@ static void MX_CAN1_Init(void);
 static void MX_UART4_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_DAC1_Init(void);
+static void MX_ADC2_Init(void);
+static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 void My_CAN_init(void);
 std::pair<int, int> get_raw_avg_apps_value();
+std::pair<int, int> get_raw_avg_press_value();
 bool get_sensors_plausibility(int apps_raw_value_1, int apps_raw_value_2);
 void send_apps_value(int value);
 
@@ -125,6 +136,9 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+/* Configure the peripherals common clocks */
+  PeriphCommonClock_Config();
+
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -137,17 +151,29 @@ int main(void)
   MX_UART4_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_DAC1_Init();
+  MX_ADC2_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-	// INIT OTHER STUFF
+    // Setup DAC for the offset voltages
+    HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+    HAL_DAC_Start(&hdac1, DAC_CHANNEL_2);
+    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 2733); // ~2200  mV
+    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 3003); // ~2418 mV
 
 	// Turn on safety
 	HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
 
 	My_CAN_init();
 
+	// APPS
 	HAL_ADC_Start_DMA(&hadc1, reinterpret_cast<uint32_t*>(apps_val_raw), 100);
 	HAL_TIM_Base_Start(&htim3);
 	HAL_TIM_Base_Start_IT(&htim2);
+
+	// Brake pressure
+    HAL_ADC_Start_DMA(&hadc2, reinterpret_cast<uint32_t*>(press_val_raw), 100);
+    HAL_TIM_Base_Start(&htim4);
 
 	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
@@ -164,23 +190,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-
 		auto bms_hv = PUTM_CAN::can.get_bms_hv_main();
 		bool ts_button = PUTM_CAN::can.get_aq_ts_button_new_data();
 		bool no_brake = PUTM_CAN::can.get_aq_main().brake_pressure_front < 3600;
 
 		if (PUTM_CAN::can.get_steering_wheel_event_new_data()) {
-				HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
-				time_change = HAL_GetTick();
-			}
+			HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
+			time_change = HAL_GetTick();
+        }
 
 		bool wait_after_start = time_change + 1000 > HAL_GetTick();
 		if(bms_hv.device_state == PUTM_CAN::BMS_HV_states::AIR_opened and not wait_after_start){
 			HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_RESET);
 		}
-
-
-
 
 		if (send_CAN_frame) {
 			send_CAN_frame = false;
@@ -220,7 +242,7 @@ int main(void)
 			// non linear curve
 			int apps_value_to_send = apps_nonlinear_curve(apps_temp, APPS_map_profile::APPS_MAP_1_linear);
 
-			// frame counter to make sure that all frames are recived
+			// frame counter to make sure that all frames are received
 			frame_couter++;
 			frame_couter %= 100;
 
@@ -237,17 +259,22 @@ int main(void)
 			auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
 			auto tx_status = tx.send(hcan1);
 			if(HAL_StatusTypeDef::HAL_OK != tx_status){
-				Error_Handler();
+//				Error_Handler();
 			}
 
-			const auto brake_val = (apps_data.pedal_position > 20) ? 0 : 0xFFFF;
+			// Input: 0-3000 Psi (200 Bar)
+			// Output: 0.5-4.5 V
+			// Formula: pressure (Bars) = 50 * voltage (V) - 25
+			auto [press_avg_1, press_avg_2] = get_raw_avg_press_value();
+			float pressure_voltage = 3.3 * press_avg_1 / 4096;
+            float pressure_voltage2 = 3.3 * press_avg_2 / 4096;
 			PUTM_CAN::AQ_main aq {
-				.brake_pressure_front = brake_val,
-						.brake_pressure_back = brake_val,
+			    .brake_pressure_front =  static_cast<uint16_t>((50 * pressure_voltage - 25) * 10),
+                .brake_pressure_back = static_cast<uint16_t>((50 * pressure_voltage2 - 25) * 10),
 			};
 			auto tx_aq = PUTM_CAN::Can_tx_message(aq, PUTM_CAN::can_tx_header_AQ_MAIN);
 			if (HAL_StatusTypeDef::HAL_OK not_eq tx_aq.send(hcan1)) {
-				Error_Handler();
+//				Error_Handler();
 			}
 
 			// FIXME debug data
@@ -325,6 +352,31 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief Peripherals Common Clock Configuration
+  * @retval None
+  */
+void PeriphCommonClock_Config(void)
+{
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+
+  /** Initializes the peripherals clock
+  */
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_PLLSAI1;
+  PeriphClkInit.PLLSAI1.PLLSAI1Source = RCC_PLLSOURCE_HSI;
+  PeriphClkInit.PLLSAI1.PLLSAI1M = 2;
+  PeriphClkInit.PLLSAI1.PLLSAI1N = 8;
+  PeriphClkInit.PLLSAI1.PLLSAI1P = RCC_PLLP_DIV2;
+  PeriphClkInit.PLLSAI1.PLLSAI1Q = RCC_PLLQ_DIV2;
+  PeriphClkInit.PLLSAI1.PLLSAI1R = RCC_PLLR_DIV2;
+  PeriphClkInit.PLLSAI1.PLLSAI1ClockOut = RCC_PLLSAI1_ADC1CLK;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
   * @brief ADC1 Initialization Function
   * @param None
   * @retval None
@@ -360,6 +412,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc1.Init.OversamplingMode = DISABLE;
+  hadc1.Init.DFSDMConfig = ADC_DFSDM_MODE_ENABLE;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
     Error_Handler();
@@ -401,6 +454,74 @@ static void MX_ADC1_Init(void)
 }
 
 /**
+  * @brief ADC2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_ADC2_Init(void)
+{
+
+  /* USER CODE BEGIN ADC2_Init 0 */
+
+  /* USER CODE END ADC2_Init 0 */
+
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN ADC2_Init 1 */
+
+  /* USER CODE END ADC2_Init 1 */
+
+  /** Common config
+  */
+  hadc2.Instance = ADC2;
+  hadc2.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
+  hadc2.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc2.Init.ScanConvMode = ADC_SCAN_ENABLE;
+  hadc2.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc2.Init.LowPowerAutoWait = DISABLE;
+  hadc2.Init.ContinuousConvMode = DISABLE;
+  hadc2.Init.NbrOfConversion = 2;
+  hadc2.Init.DiscontinuousConvMode = DISABLE;
+  hadc2.Init.ExternalTrigConv = ADC_EXTERNALTRIG_T4_TRGO;
+  hadc2.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
+  hadc2.Init.DMAContinuousRequests = ENABLE;
+  hadc2.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+  hadc2.Init.OversamplingMode = DISABLE;
+  hadc2.Init.DFSDMConfig = ADC_DFSDM_MODE_ENABLE;
+  if (HAL_ADC_Init(&hadc2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+  sConfig.SingleDiff = ADC_SINGLE_ENDED;
+  sConfig.OffsetNumber = ADC_OFFSET_NONE;
+  sConfig.Offset = 0;
+  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_2;
+  sConfig.Rank = ADC_REGULAR_RANK_2;
+  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC2_Init 2 */
+
+  /* USER CODE END ADC2_Init 2 */
+
+}
+
+/**
   * @brief CAN1 Initialization Function
   * @param None
   * @retval None
@@ -434,6 +555,56 @@ static void MX_CAN1_Init(void)
   /* USER CODE BEGIN CAN1_Init 2 */
 
   /* USER CODE END CAN1_Init 2 */
+
+}
+
+/**
+  * @brief DAC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_DAC1_Init(void)
+{
+
+  /* USER CODE BEGIN DAC1_Init 0 */
+
+  /* USER CODE END DAC1_Init 0 */
+
+  DAC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN DAC1_Init 1 */
+
+  /* USER CODE END DAC1_Init 1 */
+
+  /** DAC Initialization
+  */
+  hdac1.Instance = DAC1;
+  if (HAL_DAC_Init(&hdac1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** DAC channel OUT1 config
+  */
+  sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
+  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
+  sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
+  if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** DAC channel OUT2 config
+  */
+  if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN DAC1_Init 2 */
+
+  /* USER CODE END DAC1_Init 2 */
 
 }
 
@@ -528,6 +699,51 @@ static void MX_TIM3_Init(void)
 }
 
 /**
+  * @brief TIM4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM4_Init(void)
+{
+
+  /* USER CODE BEGIN TIM4_Init 0 */
+
+  /* USER CODE END TIM4_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM4_Init 1 */
+
+  /* USER CODE END TIM4_Init 1 */
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 63;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 99;
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM4_Init 2 */
+
+  /* USER CODE END TIM4_Init 2 */
+
+}
+
+/**
   * @brief UART4 Initialization Function
   * @param None
   * @retval None
@@ -589,6 +805,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
 
 }
 
@@ -600,39 +819,30 @@ static void MX_DMA_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_1_Pin|LED_2_Pin|LED_3_Pin|LED_4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LED_4_Pin|LED_3_Pin|LED_2_Pin|LED_1_Pin
+                          |SAFETY_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : LED_1_Pin LED_2_Pin LED_3_Pin LED_4_Pin */
-  GPIO_InitStruct.Pin = LED_1_Pin|LED_2_Pin|LED_3_Pin|LED_4_Pin;
+  /*Configure GPIO pins : LED_4_Pin LED_3_Pin LED_2_Pin LED_1_Pin
+                           SAFETY_Pin */
+  GPIO_InitStruct.Pin = LED_4_Pin|LED_3_Pin|LED_2_Pin|LED_1_Pin
+                          |SAFETY_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : SENSOR_2_Pin */
-  GPIO_InitStruct.Pin = SENSOR_2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG_ADC_CONTROL;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(SENSOR_2_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : SAFETY_Pin */
-  GPIO_InitStruct.Pin = SAFETY_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(SAFETY_GPIO_Port, &GPIO_InitStruct);
-
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -678,6 +888,22 @@ std::pair<int, int> get_raw_avg_apps_value(){
 	int apps_temp_raw_avg_2 = (int)(apps_temp_raw_sum_2 / ((float)number_of_apps_sample / 2.0f));
 
 	return std::make_pair(apps_temp_raw_avg_1, apps_temp_raw_avg_2);
+}
+
+
+std::pair<int, int> get_raw_avg_press_value(){
+    float press_temp_raw_sum_1 = 0;
+    float press_temp_raw_sum_2 = 0;
+
+    for (unsigned int i = 0; i < number_of_apps_sample; i = i + 2) {
+        press_temp_raw_sum_1 += press_val_raw[i];
+        press_temp_raw_sum_2 += press_val_raw[i + 1];
+    }
+
+    int press_temp_raw_avg_1 = (int)(press_temp_raw_sum_1 / ((float)number_of_apps_sample / 2.0f));
+    int press_temp_raw_avg_2 = (int)(press_temp_raw_sum_2 / ((float)number_of_apps_sample / 2.0f));
+
+    return std::make_pair(press_temp_raw_avg_1, press_temp_raw_avg_2);
 }
 
 
