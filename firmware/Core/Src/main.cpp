@@ -103,7 +103,6 @@ void My_CAN_init(void);
 std::pair<int, int> get_raw_avg_apps_value();
 std::pair<int, int> get_raw_avg_press_value();
 bool get_sensors_plausibility(int apps_raw_value_1, int apps_raw_value_2);
-void send_apps_value(int value);
 
 /* USER CODE END PFP */
 
@@ -211,21 +210,41 @@ int main(void)
 			auto [apps_avg_1, apps_avg_2] = get_raw_avg_apps_value();
 
 			if( bool state = get_sensors_plausibility(apps_avg_1, apps_avg_2);
-				!state && !sensor_plausibility_last )
+			!state && !sensor_plausibility_last )
 			{
-				// turn led on
-				HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+			    // turn led on
+			    HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
 
-				// potentially turn safety off
-				// HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
+			    // turn safety off
+			    //HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
 
-				// TODO or send max value to cause fast stop of CT
-//				send_apps_value(0);
+			    // send max value to cause fast stop of CT
+			    int apps_value_to_send = 0;
 
-				Error_Handler();
-			}
-			else{
-				sensor_plausibility_last = state;
+			    while(true) {
+			        // frame counter to make sure that all frames are received
+			        frame_couter++;
+			        frame_couter %= 100;
+
+			        int8_t sensor_diff_to_send{static_cast<int8_t>(std::clamp(diff_debug_data * 100'0.0f, -120.0f, 120.0f))};
+
+			        // send data
+			        PUTM_CAN::Apps_main apps_data{
+			            .pedal_position = static_cast<uint16_t>(apps_value_to_send),
+			                    .counter = frame_couter,
+			                    .position_diff = sensor_diff_to_send,
+			                    .device_state = PUTM_CAN::Apps_states::Normal_operation
+			        };
+
+			        auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
+			        auto tx_status = tx.send(hcan1);
+			        if(HAL_StatusTypeDef::HAL_OK != tx_status){
+			            Error_Handler();
+			        }
+			        HAL_Delay(100);
+			    }
+			} else{
+			    sensor_plausibility_last = state;
 			}
 
 			// range calculation
@@ -259,7 +278,7 @@ int main(void)
 			auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
 			auto tx_status = tx.send(hcan1);
 			if(HAL_StatusTypeDef::HAL_OK != tx_status){
-//				Error_Handler();
+				Error_Handler();
 			}
 
 			// Input: 0-3000 Psi (200 Bar)
@@ -274,7 +293,7 @@ int main(void)
 			};
 			auto tx_aq = PUTM_CAN::Can_tx_message(aq, PUTM_CAN::can_tx_header_AQ_MAIN);
 			if (HAL_StatusTypeDef::HAL_OK not_eq tx_aq.send(hcan1)) {
-//				Error_Handler();
+				Error_Handler();
 			}
 
 			// FIXME debug data
