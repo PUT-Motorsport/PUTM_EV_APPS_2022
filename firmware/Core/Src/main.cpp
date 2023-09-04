@@ -156,8 +156,8 @@ int main(void) {
     // Setup DAC for the offset voltages
     HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
     HAL_DAC_Start(&hdac1, DAC_CHANNEL_2);
-    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 2733); // ~2200  mV
-    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 3003); // ~2418 mV
+    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 2583); // ~2200  mV 2733
+    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 2853); // ~2418 mV 3003
 
     // Turn on safety
     HAL_GPIO_WritePin(SAFETY_GPIO_Port, SAFETY_Pin, GPIO_PIN_SET);
@@ -227,10 +227,12 @@ int main(void) {
                     // send data
                     // @formatter:off
                     PUTM_CAN::Apps_main apps_data {
-                        .pedal_position = static_cast<uint16_t>(apps_value_to_send),
-                        .counter = frame_couter, .position_diff = sensor_diff_to_send,
-                        .device_state = PUTM_CAN::Apps_states::Normal_operation
-                    }; // @formatter:on
+                            .pedal_position = static_cast<uint16_t>(apps_value_to_send),
+                            .counter = frame_couter,
+                            .position_diff = sensor_diff_to_send,
+                            .device_state = PUTM_CAN::Apps_states::Sensor_Implausiblity
+                    };
+                    // @formatter:on
 
                     auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
                     auto tx_status = tx.send(hcan1);
@@ -269,7 +271,8 @@ int main(void) {
                 .pedal_position = static_cast<uint16_t>(apps_value_to_send),
                 .counter = frame_couter, .position_diff = sensor_diff_to_send,
                 .device_state = PUTM_CAN::Apps_states::Normal_operation
-            }; // @formatter:on
+            };
+            // @formatter:on
 
             auto tx = PUTM_CAN::Can_tx_message(apps_data, PUTM_CAN::can_tx_header_APPS_MAIN);
             auto tx_status = tx.send(hcan1);
@@ -287,7 +290,8 @@ int main(void) {
             PUTM_CAN::AQ_main aq {
                 .brake_pressure_front = static_cast<uint16_t>((50 * pressure_voltage - 25) * 10),
                 .brake_pressure_back = static_cast<uint16_t>((50 * pressure_voltage2 - 25) * 10),
-            }; // @formatter:on
+            };
+            // @formatter:on
             auto tx_aq = PUTM_CAN::Can_tx_message(aq, PUTM_CAN::can_tx_header_AQ_MAIN);
             if(HAL_StatusTypeDef::HAL_OK not_eq tx_aq.send(hcan1)) {
                 Error_Handler();
